@@ -60,7 +60,7 @@ export default {
                         var k = i+j*nbCellW;
                         var x =  cellW * i + cellW/2;
                         var y =  cellH * j + cellH/2;
-                        var d = Math.max(1, sketch.dist(sketch.mouseX, sketch.mouseY, x, y));
+                        var d = Math.max(1, sketch.dist(sketch.mouseX, sketch.mouseY, x, y));//鼠标相对cell的距离
                         
                         deltaMouse.normalize();//归一化
                         deltaMouse.mult(1/(d*30)); //相对鼠标距离衰减
@@ -69,11 +69,11 @@ export default {
 
                         var h = sketch.map(cells[k].heading(), -sketch.PI, sketch.PI, 0, 1);
                         var b = sketch.min(cells[k].mag()*100, 10);
-                        sketch.fill(h, 1, b);
+                        sketch.fill(h, 1, b);//累加后的向量获取色彩空间
                         
-                        sketch.rect(x, y, cellW, cellH);
+                        sketch.rect(x, y, cellW, cellH);//画cell
                         
-                        cells[k].mult(.98);
+                        cells[k].mult(.98);//时间衰减
                     }
                 }
             };
