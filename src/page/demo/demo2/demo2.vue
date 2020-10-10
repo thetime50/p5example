@@ -1,21 +1,84 @@
 <template>
 <div class="component-demo2">
-    demo2
+    <div class="info">
+        <a href="https://www.openprocessing.org/sketch/849430">LightPainting</a>
+    </div>
+    <div class="content" ref="content">
+        <!--  -->
+    </div>
 </div>
 </template>
 
 <script>
 /* message */
+// import p5 from "p5"
+
 export default {
-    name: "demo2",
-    data () {
+    name: "LightPainting",
+    data() {
         return {
-            // 
+            createAt: new Date().toLocaleTimeString(),
+
+            //p5
+            _myp5: null
         };
     },
-    methods:{
-        // 
+    mounted() {
+        this.$nextTick(() => {
+            this._myp5 = new p5(this.p5namespace, this.$refs.content);
+        });
     },
+    beforeDestroy(){
+        this._myp5 && this._myp5.remove()
+    },
+    methods: {
+        p5namespace(sketch) {
+            let cells = [];
+            let cellW = 15;
+            let cellH = 15;
+            let nbCellW;
+            let nbCellH;
+            // sketch.preload = function(){}
+            sketch.setup = function () {
+                sketch.createCanvas(600, 600);
+                sketch.rectMode(sketch.CENTER);
+                sketch.colorMode(sketch.HSB, 1);
+                
+                nbCellW = sketch.floor(sketch.width / cellW);
+                nbCellH = sketch.floor(sketch.height / cellH);
+                
+                for (let i = 0; i < nbCellW*nbCellH; i ++) {
+                    cells.push(sketch.createVector(0, 0));
+                }
+            };
+
+            sketch.draw = function () {
+                //鼠标变化量
+                let deltaMouse = sketch.createVector(sketch.mouseX - sketch.pmouseX, sketch.mouseY - sketch.pmouseY);
+                for (let i = 0; i < nbCellW; i ++) {
+                    for (let j = 0; j < nbCellH; j ++) {
+                        var k = i+j*nbCellW;
+                        var x =  cellW * i + cellW/2;
+                        var y =  cellH * j + cellH/2;
+                        var d = Math.max(1, sketch.dist(sketch.mouseX, sketch.mouseY, x, y));
+                        
+                        deltaMouse.normalize();//归一化
+                        deltaMouse.mult(1/(d*30)); //相对鼠标距离衰减
+                        cells[k].add(deltaMouse); //累加到单元格
+                        cells[k].limit(10); //极值限制
+
+                        var h = sketch.map(cells[k].heading(), -sketch.PI, sketch.PI, 0, 1);
+                        var b = sketch.min(cells[k].mag()*100, 10);
+                        sketch.fill(h, 1, b);
+                        
+                        sketch.rect(x, y, cellW, cellH);
+                        
+                        cells[k].mult(.98);
+                    }
+                }
+            };
+        }
+    }
 }
 </script>
 
@@ -24,7 +87,7 @@ $back:#424242;
 .component-demo2{
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr auto;//.class1 .class2
+    grid-template-rows: auto 1fr;//.class1 .class2
     >*{
         min-width: 0;
         min-height: 0;
