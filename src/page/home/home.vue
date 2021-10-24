@@ -8,12 +8,12 @@
 /* message */
 
 export default {
-    name: "home",
-    data () {
-        return {
-        };
-    },
-}
+  name: 'home',
+  data() {
+    return {
+    };
+  },
+};
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>

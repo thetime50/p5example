@@ -10,12 +10,12 @@
 /* message */
 
 export default {
-    name: "error404",
-    data () {
-        return {
-        };
-    },
-}
+  name: 'error404',
+  data() {
+    return {
+    };
+  },
+};
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>

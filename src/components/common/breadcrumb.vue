@@ -11,42 +11,42 @@
 
 <script>
 /* message */
-import {menu} from "@/js/menu/menu.js"
+import { menu } from '@/js/menu/menu';
 
 export default {
-    name: "wx-breadcrumb",
-    data () {
-        return {
-            root:""
-        };
-    },
-    computed:{
-        bitems(){
-            let result = []
-            let routePath = this.$route.path.split('/').slice(1)
-            let this_ = this
-            let traverseChildren = function(arr, depth=0,path = []){
-                arr.forEach((v,i,a) => {
-                    if(v.route==routePath[depth]){
-                        let itemPath = path.map(v=>v.route)
-                        itemPath.unshift(this_.root)
-                        itemPath.push(v.route)
-                        itemPath = itemPath.join("/")
-                        result.push({
-                            title:v.title,
-                            path:itemPath
-                        })
-                        if(v.children && depth < routePath.length-1){
-                            traverseChildren(v.children, depth+1,path.concat(v))
-                        }
-                    }
-                });
+  name: 'wx-breadcrumb',
+  data() {
+    return {
+      root: '',
+    };
+  },
+  computed: {
+    bitems() {
+      const result = [];
+      const routePath = this.$route.path.split('/').slice(1);
+      const this_ = this;
+      const traverseChildren = function (arr, depth = 0, path = []) {
+        arr.forEach((v, i, a) => {
+          if (v.route == routePath[depth]) {
+            let itemPath = path.map((v) => v.route);
+            itemPath.unshift(this_.root);
+            itemPath.push(v.route);
+            itemPath = itemPath.join('/');
+            result.push({
+              title: v.title,
+              path: itemPath,
+            });
+            if (v.children && depth < routePath.length - 1) {
+              traverseChildren(v.children, depth + 1, path.concat(v));
             }
-            traverseChildren(menu)
-            return result
-        },
+          }
+        });
+      };
+      traverseChildren(menu);
+      return result;
     },
-}
+  },
+};
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>

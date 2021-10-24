@@ -9,22 +9,23 @@
 </template>
 
 <script>
-import menuTree from "@/components/common/menuTree.vue"
-import breadcrumb from "@/components/common/breadcrumb.vue"
+import menuTree from '@/components/common/menuTree.vue';
+import breadcrumb from '@/components/common/breadcrumb.vue';
 
-import {menu} from "./js/menu/menu.js"
+import { menu } from './js/menu/menu';
+
 export default {
   name: 'App',
-  components:{
+  components: {
     menuTree,
     breadcrumb,
   },
-  data(){
+  data() {
     return {
       menu,
-    }
-  }
-}
+    };
+  },
+};
 </script>
 
 <style lang="scss">

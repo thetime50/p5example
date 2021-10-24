@@ -1,14 +1,14 @@
-import demoMenu from "./demoMenu.js"
+import demoMenu from './demoMenu';
 
-let menu = [
-    {
-        title:"首页",
-        id:"0",
-        route:"home",
-    },
-    demoMenu,
-]
+const menu = [
+  {
+    title: '首页',
+    id: '0',
+    route: 'home',
+  },
+  demoMenu,
+];
 
 export {
-    menu
-}
+  menu,
+};
