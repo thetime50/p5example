@@ -1,6 +1,6 @@
 <template>
 <div class="component-home">
-    home
+    home <img src="favicon.ico" alt="">
 </div>
 </template>
 
